@@ -2,7 +2,7 @@
 
 {% block content %}
     {% for mensaje in get_flashed_messages()  %}
-        <div class="alert alert-success alert-dismissable">
+        <div class="alert alert-success alert-dimissable">
             <button type="button"
                     data-dismiss="alert"
                     class="close">
@@ -11,28 +11,24 @@
             </button>
         </div>
     {% endfor %}
-    <h1>Lista de Productos</h1>
+    <h1>Lista de Clientes</h1>
     <table class="table table-bordered">
         <thead>
             <th>Nombre</th>
-            <th>Precio</th>
-            <th>Imagen</th>
+            <th>Email</th>
         </thead>
         <tbody>
-            {% for productos in productos %}
+            {% for clientes in clientes %}
             <tr>
-                <td>{{productos.nombre}}</td>
-                <td>{{productos.precio}}</td>
+                <td>{{clientes.nombre}}</td>
+                <td>{{clientes.email}}</td>
                 <td>
-                    <img src="imagenes/{{ productos.imagen }}" alt="" width="200px" height="200px">
-                </td>
-                <td>
-                    <a href="/productos/editar/{{productos.idP}}">
+                    <a href="/clientes/editar/{{clientes.idC}}">
                         Actualizar
                     </a>
                 </td>
                 <td>
-                    <a href="/productos/eliminar/{{productos.idP}}">
+                    <a href="/clientes/eliminar/{{clientes.idC}}">
                         Funar
                     </a>
                 </td>

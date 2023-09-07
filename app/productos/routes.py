@@ -1,6 +1,6 @@
 from . import productos_bp
-from flask import render_template
-from .forms import NewProductForm
+from flask import render_template, redirect, flash
+from .forms import NewProductForm, EditProductForm
 import app
 import os
     
@@ -23,7 +23,8 @@ def crear():
         
         #Este metodo getcwd() permite identificar la ruta absoluta del proyecto
         #return os.getcwd()
-        return 'producto registrado'
+        flash("Producto registrado exitosamente")
+        return redirect('/productos/listar')
     return render_template('new.html', form = form)
 
 @productos_bp.route('/listar' )
@@ -31,3 +32,32 @@ def listar():
     productos= app.Producto.query.all()
     return render_template('listar.html' ,
                            productos=productos)
+    
+@productos_bp.route('/editar/<idP>' ,
+                    methods=['GET','POST'])
+def editar(idP):
+    #seleccionar el producto
+    #con el id
+    p= app.models.Producto.query.get(idP)
+    #cargo el formulario
+    #con los atributos de producto
+    form_edit = EditProductForm(obj = p)
+    if form_edit.validate_on_submit():
+        form_edit.populate_obj(p)
+        app.db.session.commit()
+        flash("Producto editado exitosamente")
+        return redirect("/productos/listar")
+    return render_template('new.html',
+                        form=form_edit)
+    
+@productos_bp.route('/eliminar/<idP>' ,
+                    methods=['GET','POST'])
+def eliminar(idP):
+    #seleccionar el producto
+    #con el id
+    p= app.models.Producto.query.get(idP)
+    #eliminar el producto
+    app.db.session.delete(p)
+    app.db.session.commit()
+    flash("Producto funado exitosamente")
+    return redirect("/productos/listar")

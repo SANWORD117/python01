@@ -6,6 +6,7 @@ from flask_bootstrap import Bootstrap
 #blueprint
 from .my_blueprint import mi_blueprint
 from app.productos import productos_bp
+from app.clientes import clientes_bp
 
 
 #creacion y configuracion de la app
@@ -16,6 +17,7 @@ Bootstrap = Bootstrap(app)
 #registro de bluieprints
 app.register_blueprint(mi_blueprint)
 app.register_blueprint(productos_bp)
+app.register_blueprint(clientes_bp)
 
 # bootstrap = Bootstrap(app)
 db = SQLAlchemy(app)
